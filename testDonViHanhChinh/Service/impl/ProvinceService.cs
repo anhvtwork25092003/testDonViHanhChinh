@@ -1,5 +1,6 @@
 ﻿using testDonViHanhChinh.Data;
 using testDonViHanhChinh.Model.Request;
+using testDonViHanhChinh.Model.Response;
 using testDonViHanhChinh.Repository;
 using testDonViHanhChinh.Repository.impl;
 
@@ -31,9 +32,19 @@ namespace testDonViHanhChinh.Service.impl
             _proviceRepository.Delete(id);
         }
 
-        public List<Province> GetAll()
+        public List<Province> GetProvinceWithDistrict()
         {
-            return _proviceRepository.GetAll();
+            return _proviceRepository.GetProvinceWithDistrict();
+        }
+        public List<ProvinceResponse> GetListProvince()
+        {
+            var pronvinces = _proviceRepository.GetListProvince().ToList();
+            var provincesResponse = pronvinces.Select(pronvinces => new ProvinceResponse
+            {
+                Id= pronvinces.Id,
+                Name= pronvinces.Name,
+            }).ToList();
+            return provincesResponse;
         }
 
         public Province GetById(int id)

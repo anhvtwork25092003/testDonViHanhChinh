@@ -15,10 +15,18 @@ namespace testDonViHanhChinh.Controllers
             _provinceService = provinceService;
         }
 
-        [HttpGet]
+        [HttpGet("get-province-with-district")]
         public IActionResult GetAllProvinces()
         {
-            var provinces = _provinceService.GetAll();
+            var provinces = _provinceService.GetProvinceWithDistrict();
+            return Ok(provinces);
+        }
+
+
+        [HttpGet("get-list-province")]
+        public IActionResult GetListProvince()
+        {
+            var provinces = _provinceService.GetListProvince();
             return Ok(provinces);
         }
 

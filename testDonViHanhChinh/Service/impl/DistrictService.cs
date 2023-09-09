@@ -6,24 +6,29 @@ using testDonViHanhChinh.Repository;
 
 namespace testDonViHanhChinh.Service.impl
 {
-    public class DistrictService: IDistrictService
+    public class DistrictService : IDistrictService
     {
         private readonly IDistrictRepository _districtRepository;
+        private readonly IProvincesService _provincesService;
 
-        public DistrictService(IDistrictRepository districtRepository)
+        public DistrictService(IDistrictRepository districtRepository, IProvincesService provincesService)
         {
             _districtRepository = districtRepository;
+            _provincesService = provincesService;
         }
 
         public List<DistrictResponse> GetAllDistricts()
         {
             var districts = _districtRepository.GetAllDistricts().ToList();
 
-            // Ánh xạ từ District sang DistrictResponse
+            // Ánh xạ từ District sang DistrictResponse và lấy ProvinceName
             var districtResponses = districts.Select(district => new DistrictResponse
             {
                 Id = district.Id,
                 Name = district.Name,
+
+
+                ProvineName = _provincesService.GetById(district.ProvinceId).Name,
                 // Sao chép các thuộc tính khác nếu cần
             }).ToList();
 
@@ -78,6 +83,28 @@ namespace testDonViHanhChinh.Service.impl
         public void DeleteDistrict(int id)
         {
             _districtRepository.DeleteDistrict(id);
+        }
+
+        public List<DistrictResponse> GetDistrictsByProvinceId(int provinceId)
+        {
+            var province = _provincesService.GetById(provinceId);
+            var districts = _districtRepository.GetDistrictsByProvinceId(provinceId).ToList();
+            var districtResponses = districts.Select(district =>
+            {
+                var response = new DistrictResponse
+                {
+                    Id = district.Id,
+                    Name = district.Name,
+                    ProvineName= province.Name,
+                    // Sao chép các thuộc tính khác nếu cần
+                };
+
+    
+
+                return response;
+            }).ToList();
+
+            return districtResponses;
         }
     }
 }

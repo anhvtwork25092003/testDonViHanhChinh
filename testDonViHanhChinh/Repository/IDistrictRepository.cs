@@ -22,5 +22,9 @@ namespace testDonViHanhChinh.Repository
 
         // Xóa huyện
         void DeleteDistrict(int id);
+
+
+        // lay danh sach cac huyen khi truyen vao privinceID
+        List<District> GetDistrictsByProvinceId(int provinceId);
     }
 }

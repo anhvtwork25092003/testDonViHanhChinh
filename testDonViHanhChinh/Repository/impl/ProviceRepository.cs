@@ -32,6 +32,7 @@ namespace testDonViHanhChinh.Repository.impl
         {
             return _context.Provinces
                 .Include(p => p.Districts).
+                ThenInclude(p=>p.Wards).
                 ToList();
         }
         public List<Province> GetListProvince()
@@ -43,8 +44,7 @@ namespace testDonViHanhChinh.Repository.impl
 
         public Province GetById(int id)
         {
-            return _context.Provinces.Include(p => p.Districts).
-                  ThenInclude(p => p.Wards).
+            return _context.Provinces.Include(p => p.Districts).ThenInclude(p => p.Wards).
                 FirstOrDefault(p => p.Id == id);
         }
 
@@ -52,7 +52,8 @@ namespace testDonViHanhChinh.Repository.impl
         {
             return _context.Provinces.Where(p => p.Name.Equals(name))
                 .Include(p => p.Districts).
-                ThenInclude(p => p.Wards).ToList();
+                     ThenInclude(p => p.Wards)
+               .ToList();
         }
 
         public void Update(Province province)

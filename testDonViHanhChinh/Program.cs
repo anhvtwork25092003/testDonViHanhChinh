@@ -17,6 +17,8 @@ builder.Services.AddScoped<IProvincesService, ProvinceService>();
 builder.Services.AddScoped<IProviceRepository, ProviceRepository>();
 builder.Services.AddScoped<IDistrictRepository, DistrictRepository>();
 builder.Services.AddScoped<IDistrictService, DistrictService>();
+builder.Services.AddScoped<IWardrepository, Wardrepository>();
+builder.Services.AddScoped<IWardService, WardService>();
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {

@@ -14,6 +14,7 @@ namespace testDonViHanhChinh.Repository.impl
 
         public List<District> GetAllDistricts()
         {
+            
             return _context.Districts.ToList();
         }
 
@@ -58,6 +59,11 @@ namespace testDonViHanhChinh.Repository.impl
                 _context.Districts.Remove(district);
                 _context.SaveChanges();
             }
+        }
+
+        public List<District> GetDistrictsByProvinceId(int provinceId)
+        {
+            return _context.Districts.Where(d => d.ProvinceId == provinceId).ToList();
         }
     }
 

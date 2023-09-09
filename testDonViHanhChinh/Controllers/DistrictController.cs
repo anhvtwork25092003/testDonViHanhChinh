@@ -8,7 +8,7 @@ namespace testDonViHanhChinh.Controllers
     public class DistrictController : Controller
     {
         private readonly IDistrictService _districtService;
-
+        
         public DistrictController(IDistrictService districtService)
         {
             _districtService = districtService;
@@ -95,6 +95,17 @@ namespace testDonViHanhChinh.Controllers
                 // Xử lý lỗi và trả về lỗi HTTP 500 hoặc tùy chọn khác
                 return StatusCode(500, $"Internal Server Error: {ex.Message}");
             }
+        }
+
+        [HttpGet("byprovince/{provinceId}")]
+        public ActionResult<IEnumerable<District>> GetDistrictsByProvinceId(int provinceId)
+        {
+            var districts = _districtService.GetDistrictsByProvinceId(provinceId);
+            if (districts == null || !districts.Any())
+            {
+                return NotFound();
+            }
+            return Ok(districts);
         }
     }
 }
